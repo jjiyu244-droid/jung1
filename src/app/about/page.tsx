@@ -51,14 +51,14 @@ export default function About() {
       </section>
 
       {/* 전문 분야 소개 */}
-      <section className="py-20 bg-gray-50">
-        <div className="max-w-6xl mx-auto px-4">
+      <section className="py-20" style={{ backgroundColor: '#F7F9FC' }}>
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl font-bold text-center text-gray-900 mb-4">저희가 집중하는 4가지 전문 분야</h2>
           <p className="text-lg text-center text-gray-600 mb-16">각 분야별 전문성으로 최고의 결과를 제공합니다</p>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
             {specialties.map((specialty, index) => (
-              <div key={index} className="bg-white rounded-lg shadow p-6">
+              <div key={index} className="bg-white rounded-lg shadow-lg border border-gray-200 p-6 hover:shadow-xl transition-shadow duration-300">
                 <h3 className="text-xl font-bold text-gray-900 mb-2">{specialty.title}</h3>
                 {specialty.subtitle && (
                   <p className="text-orange-500 font-medium mb-4">({specialty.subtitle})</p>
