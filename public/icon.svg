@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <!-- 배경 -->
+  <rect width="64" height="64" fill="#ffffff"/>
+  
+  <!-- 저울 받침대 -->
+  <rect x="26" y="52" width="12" height="6" fill="#2c3e50" rx="2"/>
+  
+  <!-- 저울 기둥 -->
+  <rect x="30" y="18" width="4" height="34" fill="#2c3e50" rx="1"/>
+  
+  <!-- 저울 막대 -->
+  <line x1="8" y1="18" x2="56" y2="18" stroke="#2c3e50" stroke-width="3.5" stroke-linecap="round"/>
+  
+  <!-- 왼쪽 저울 접시 -->
+  <ellipse cx="15" cy="32" rx="9" ry="3" fill="#ea5a2b" opacity="0.3"/>
+  <ellipse cx="15" cy="30" rx="9" ry="3" fill="#ea5a2b" opacity="0.6"/>
+  <ellipse cx="15" cy="28" rx="9" ry="2.5" fill="#ea5a2b"/>
+  <line x1="15" y1="18" x2="15" y2="26" stroke="#2c3e50" stroke-width="2.5" stroke-linecap="round"/>
+  
+  <!-- 오른쪽 저울 접시 -->
+  <ellipse cx="49" cy="32" rx="9" ry="3" fill="#ea5a2b" opacity="0.3"/>
+  <ellipse cx="49" cy="30" rx="9" ry="3" fill="#ea5a2b" opacity="0.6"/>
+  <ellipse cx="49" cy="28" rx="9" ry="2.5" fill="#ea5a2b"/>
+  <line x1="49" y1="18" x2="49" y2="26" stroke="#2c3e50" stroke-width="2.5" stroke-linecap="round"/>
+  
+  <!-- 저울 중심 장식 (법무법인 상징) -->
+  <circle cx="32" cy="18" r="4" fill="#ea5a2b"/>
+  <circle cx="32" cy="18" r="2" fill="#ffffff"/>
+</svg>

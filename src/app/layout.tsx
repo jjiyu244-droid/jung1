@@ -16,6 +16,10 @@ export const metadata: Metadata = {
   description: "12년의 경험으로 축적된 전문성과 신뢰성. 입찰권, 회원권, 투자사기, 폰지사기, 전화사기 분야에 특화된 전문 변호사와 상담하세요.",
   keywords: "법무법인, 변호사, 법률상담, 투자사기, 폰지사기, 전화사기, 입찰권, 회원권, 사기피해",
   authors: [{ name: "김지수 법률사무소" }],
+  icons: {
+    icon: '/icon.svg',
+    apple: '/icon.svg',
+  },
   openGraph: {
     title: "김지수 법률사무소 - 신뢰받는 법률 서비스",
     description: "12년의 경험으로 축적된 전문성과 신뢰성",
