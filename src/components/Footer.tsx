@@ -18,7 +18,7 @@ const Footer = () => {
               </div>
               <div>
                 <span className="text-2xl font-bold text-white">
-                  김정숙 법률사무소
+                  김지수 법률사무소
                 </span>
                 <p className="text-xs text-gray-400">
                   신뢰받는 법률 서비스
@@ -128,8 +128,8 @@ const Footer = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
           <div className="flex flex-col md:flex-row justify-between items-start">
             <div className="text-gray-400 text-sm mb-4 md:mb-0">
-              <p>&copy; 2024 김정숙 법률사무소. All rights reserved.</p>
-              <p className="mt-1">대표변호사: 김정숙</p>
+              <p>&copy; 2024 김지수 법률사무소. All rights reserved.</p>
+              <p className="mt-1">대표변호사: 김지수</p>
             </div>
             <div className="flex space-x-8 text-sm">
               <Link href="/faq" className="text-gray-400 hover:text-orange-500 transition-colors text-center min-w-[60px]">

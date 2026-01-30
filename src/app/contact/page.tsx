@@ -289,7 +289,7 @@ export default function Contact() {
                   allowFullScreen
                   loading="lazy"
                   referrerPolicy="no-referrer-when-downgrade"
-                  title="김정숙 법률사무소 위치"
+                  title="김지수 법률사무소 위치"
                 />
                 <div className="bg-white p-4 border-t">
                   <div className="flex items-center text-gray-700">
