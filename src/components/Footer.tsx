@@ -55,11 +55,11 @@ const Footer = () => {
               </div>
               <div className="flex items-center space-x-3">
                                   <Mail className="h-4 w-4 text-orange-500" />
-                <span className="text-gray-300">jungsuk75@gmail.com</span>
+                <span className="text-gray-300">lfkjs1150@gmail.com</span>
               </div>
               <div className="flex items-center space-x-3">
                                   <MapPin className="h-4 w-4 text-orange-500" />
-                <span className="text-gray-300">서울특별시 강남구 테헤란로 317 동훈빌딩 503호</span>
+                <span className="text-gray-300">서울 강남구 테헤란로8길 16 301~2호</span>
               </div>
             </div>
           </div>
