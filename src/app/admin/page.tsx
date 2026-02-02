@@ -19,7 +19,8 @@ interface ConsultationData {
 const AUTH_STORAGE_KEY = 'admin_authenticated';
 
 export default function AdminPage() {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  // 초기 상태를 null로 설정하여 localStorage 확인 전까지는 결정하지 않음
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
   const [password, setPassword] = useState('');
   const [loginError, setLoginError] = useState('');
   const [consultations, setConsultations] = useState<ConsultationData[]>([]);
@@ -27,7 +28,6 @@ export default function AdminPage() {
   const [searchTerm, setSearchTerm] = useState('');
   const [sortOrder, setSortOrder] = useState<'newest' | 'oldest'>('newest');
   const [selectedConsultation, setSelectedConsultation] = useState<ConsultationData | null>(null);
-  const [isCheckingAuth, setIsCheckingAuth] = useState(true);
 
   // 비밀번호 확인 (실제 서비스에서는 더 안전한 방법 사용)
   const ADMIN_PASSWORD = 'cldcodchd6'; // 실제로는 환경변수나 더 안전한 방법 사용
@@ -66,8 +66,9 @@ export default function AdminPage() {
       if (savedAuth === 'true') {
         setIsAuthenticated(true);
         fetchConsultations();
+      } else {
+        setIsAuthenticated(false);
       }
-      setIsCheckingAuth(false);
     }
   }, [fetchConsultations]);
 
@@ -120,8 +121,8 @@ export default function AdminPage() {
     return new Date(dateString).toLocaleString('ko-KR');
   };
 
-  // 인증 상태 확인 중
-  if (isCheckingAuth) {
+  // 인증 상태 확인 중 (null이면 아직 확인 안 됨)
+  if (isAuthenticated === null) {
     return (
       <div className="min-h-screen bg-gray-100 flex items-center justify-center">
         <div className="text-gray-500">로딩 중...</div>
@@ -130,7 +131,7 @@ export default function AdminPage() {
   }
 
   // 로그인 화면
-  if (!isAuthenticated) {
+  if (isAuthenticated === false) {
     return (
       <div className="min-h-screen bg-gray-100 flex items-center justify-center">
         <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
