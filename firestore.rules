@@ -6,8 +6,12 @@ service cloud.firestore {
       // 모든 사용자가 새 문서를 생성할 수 있음 (상담 신청)
       allow create: if true;
       
-      // 읽기는 관리자만 가능 (실제로는 더 엄격한 인증 필요)
-      allow read, update, delete: if false;
+      // 읽기는 허용 (어드민 페이지에서 조회 가능하도록)
+      // TODO: 실제 프로덕션에서는 Firebase Authentication을 사용하여 인증된 사용자만 읽을 수 있도록 수정 필요
+      allow read: if true;
+      
+      // 수정 및 삭제는 차단 (보안상 수정/삭제는 서버에서만 처리)
+      allow update, delete: if false;
     }
     
     // 기본적으로 모든 다른 문서에 대한 접근 차단

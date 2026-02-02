@@ -44,15 +44,28 @@ export default function AdminPage() {
       const consultationsList: ConsultationData[] = [];
       
       querySnapshot.forEach((doc) => {
+        const data = doc.data();
         consultationsList.push({
           id: doc.id,
-          ...doc.data()
+          name: data.name || '',
+          phone: data.phone || '',
+          email: data.email || '',
+          service: data.service || '일반 상담',
+          message: data.message || '',
+          createdAt: data.createdAt?.toDate() || null,
+          submittedAt: data.submittedAt || data.createdAt?.toDate().toISOString() || new Date().toISOString()
         } as ConsultationData);
       });
       
       setConsultations(consultationsList);
+      console.log('상담 데이터 로드 완료:', consultationsList.length, '건');
     } catch (error) {
       console.error('상담 데이터 가져오기 오류:', error);
+      if (error instanceof Error) {
+        console.error('에러 메시지:', error.message);
+        console.error('에러 코드:', (error as any).code);
+        alert(`데이터를 불러오는 중 오류가 발생했습니다.\n\n에러: ${error.message}\n\nFirestore 보안 규칙을 확인해주세요.`);
+      }
     } finally {
       setLoading(false);
     }

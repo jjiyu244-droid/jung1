@@ -1,7 +1,7 @@
 'use client';
 
 import { db } from '@/lib/firebase';
-import { collection, addDoc } from 'firebase/firestore';
+import { collection, addDoc, Timestamp } from 'firebase/firestore';
 
 export default function Home() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -19,7 +19,7 @@ export default function Home() {
         service: '일반 상담',
         message: formData.get('inquiry'),
         privacy: formData.get('privacy'),
-        createdAt: new Date(),
+        createdAt: Timestamp.now(),
         submittedAt: new Date().toISOString()
       });
       
