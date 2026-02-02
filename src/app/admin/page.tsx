@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { collection, getDocs, orderBy, query } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
 import { Search, Eye, Calendar, Phone, User } from 'lucide-react';
@@ -16,6 +16,8 @@ interface ConsultationData {
   submittedAt: string;
 }
 
+const AUTH_STORAGE_KEY = 'admin_authenticated';
+
 export default function AdminPage() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [password, setPassword] = useState('');
@@ -25,19 +27,36 @@ export default function AdminPage() {
   const [searchTerm, setSearchTerm] = useState('');
   const [sortOrder, setSortOrder] = useState<'newest' | 'oldest'>('newest');
   const [selectedConsultation, setSelectedConsultation] = useState<ConsultationData | null>(null);
+  const [isCheckingAuth, setIsCheckingAuth] = useState(true);
 
   // 비밀번호 확인 (실제 서비스에서는 더 안전한 방법 사용)
   const ADMIN_PASSWORD = 'cldcodchd6'; // 실제로는 환경변수나 더 안전한 방법 사용
+
+  // 페이지 로드 시 저장된 인증 상태 확인
+  useEffect(() => {
+    const savedAuth = localStorage.getItem(AUTH_STORAGE_KEY);
+    if (savedAuth === 'true') {
+      setIsAuthenticated(true);
+      fetchConsultations();
+    }
+    setIsCheckingAuth(false);
+  }, []);
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
     if (password === ADMIN_PASSWORD) {
       setIsAuthenticated(true);
+      localStorage.setItem(AUTH_STORAGE_KEY, 'true');
       setLoginError('');
       fetchConsultations();
     } else {
       setLoginError('비밀번호가 올바르지 않습니다.');
     }
+  };
+
+  const handleLogout = () => {
+    setIsAuthenticated(false);
+    localStorage.removeItem(AUTH_STORAGE_KEY);
   };
 
   const fetchConsultations = async () => {
@@ -86,6 +105,15 @@ export default function AdminPage() {
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleString('ko-KR');
   };
+
+  // 인증 상태 확인 중
+  if (isCheckingAuth) {
+    return (
+      <div className="min-h-screen bg-gray-100 flex items-center justify-center">
+        <div className="text-gray-500">로딩 중...</div>
+      </div>
+    );
+  }
 
   // 로그인 화면
   if (!isAuthenticated) {
@@ -189,7 +217,7 @@ export default function AdminPage() {
           <div className="flex justify-between items-center">
             <h1 className="text-2xl font-bold">상담 신청 관리</h1>
             <button
-              onClick={() => setIsAuthenticated(false)}
+              onClick={handleLogout}
               className="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700"
             >
               로그아웃
