@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { collection, getDocs, orderBy, query } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
 import { Search, Eye, Calendar, Phone, User } from 'lucide-react';
@@ -32,34 +32,8 @@ export default function AdminPage() {
   // 비밀번호 확인 (실제 서비스에서는 더 안전한 방법 사용)
   const ADMIN_PASSWORD = 'cldcodchd6'; // 실제로는 환경변수나 더 안전한 방법 사용
 
-  // 페이지 로드 시 저장된 인증 상태 확인
-  useEffect(() => {
-    const savedAuth = localStorage.getItem(AUTH_STORAGE_KEY);
-    if (savedAuth === 'true') {
-      setIsAuthenticated(true);
-      fetchConsultations();
-    }
-    setIsCheckingAuth(false);
-  }, []);
-
-  const handleLogin = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (password === ADMIN_PASSWORD) {
-      setIsAuthenticated(true);
-      localStorage.setItem(AUTH_STORAGE_KEY, 'true');
-      setLoginError('');
-      fetchConsultations();
-    } else {
-      setLoginError('비밀번호가 올바르지 않습니다.');
-    }
-  };
-
-  const handleLogout = () => {
-    setIsAuthenticated(false);
-    localStorage.removeItem(AUTH_STORAGE_KEY);
-  };
-
-  const fetchConsultations = async () => {
+  // 상담 데이터 가져오기 함수 (useCallback으로 메모이제이션)
+  const fetchConsultations = useCallback(async () => {
     setLoading(true);
     try {
       const q = query(
@@ -82,6 +56,46 @@ export default function AdminPage() {
     } finally {
       setLoading(false);
     }
+  }, []);
+
+  // 페이지 로드 시 저장된 인증 상태 확인 (클라이언트 사이드에서만 실행)
+  useEffect(() => {
+    // 브라우저 환경에서만 localStorage 접근
+    if (typeof window !== 'undefined') {
+      const savedAuth = localStorage.getItem(AUTH_STORAGE_KEY);
+      if (savedAuth === 'true') {
+        setIsAuthenticated(true);
+        fetchConsultations();
+      }
+      setIsCheckingAuth(false);
+    }
+  }, [fetchConsultations]);
+
+  const handleLogin = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (password === ADMIN_PASSWORD) {
+      setIsAuthenticated(true);
+      // 브라우저 환경에서만 localStorage 접근
+      if (typeof window !== 'undefined') {
+        localStorage.setItem(AUTH_STORAGE_KEY, 'true');
+      }
+      setPassword(''); // 비밀번호 필드 초기화
+      setLoginError('');
+      fetchConsultations();
+    } else {
+      setLoginError('비밀번호가 올바르지 않습니다.');
+      setPassword(''); // 비밀번호 필드 초기화
+    }
+  };
+
+  const handleLogout = () => {
+    setIsAuthenticated(false);
+    // 브라우저 환경에서만 localStorage 접근
+    if (typeof window !== 'undefined') {
+      localStorage.removeItem(AUTH_STORAGE_KEY);
+    }
+    setConsultations([]); // 상담 데이터 초기화
+    setSelectedConsultation(null); // 선택된 상담 초기화
   };
 
   // 검색 필터링
